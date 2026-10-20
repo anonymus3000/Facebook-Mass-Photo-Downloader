@@ -1,0 +1,17 @@
+{
+  "name": "photoculler",
+  "version": "0.1.0",
+  "description": "Local-first photo culling, sorting and tagging for huge folders",
+  "main": "main.js",
+  "private": true,
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "exifr": "^7.1.3",
+    "sharp": "^0.33.5"
+  },
+  "devDependencies": {
+    "electron": "^33.2.0"
+  }
+}

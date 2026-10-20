@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; img-src 'self' pc: data:; style-src 'self' 'unsafe-inline'; script-src 'self'">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Photo Culler</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="app">
+  <header id="bar">
+    <button id="btnOpen" class="primary">Open folder</button>
+    <div class="seg" role="group" aria-label="View">
+      <button id="vSingle" aria-pressed="true">Photo</button>
+      <button id="vGrid" aria-pressed="false">Grid</button>
+    </div>
+    <input id="filter" type="search" spellcheck="false" aria-label="Filter by tags"
+           placeholder="Filter: funny AND clipped, funny OR isaac, NOT untagged, 2023-2024">
+    <span id="count" class="dim"></span>
+    <span id="scanText" class="dim"></span>
+    <span class="grow"></span>
+    <label id="sizeWrap" class="dim" hidden>Thumbnails <input id="size" type="range" min="90" max="360" step="10"></label>
+    <button id="btnExport">Export</button>
+    <button id="btnBackup">Back up tags</button>
+    <button id="btnRestore">Restore tags</button>
+    <button id="btnKeys">Keybinds</button>
+    <div id="scanbar"><i></i></div>
+  </header>
+
+  <main id="stage">
+    <div id="empty"><p>Open a folder of photos to start culling.</p></div>
+    <section id="single" hidden>
+      <div id="viewer"><img id="photo" alt="" draggable="false"></div>
+      <div id="info"></div>
+    </section>
+    <section id="grid" hidden></section>
+  </main>
+  <footer id="strip" hidden></footer>
+</div>
+<div id="toasts" aria-live="polite"></div>
+
+<dialog id="dlgKeys">
+  <h2>Keybinds</h2>
+  <p class="dim">Press a key to toggle its tag on every selected photo. Ctrl and Alt combinations work too.</p>
+  <div id="keyRows"></div>
+  <button id="keyAdd">Add keybind</button>
+  <label class="check"><input type="checkbox" id="optOpen"> Clicking a thumbnail in the grid opens the photo</label>
+  <menu><button id="keyCancel">Cancel</button><button id="keySave" class="primary">Save</button></menu>
+</dialog>
+
+<dialog id="dlgExport">
+  <h2>Export photos</h2>
+  <label>Photos to export
+    <input id="exQuery" spellcheck="false" placeholder="funny AND clipped   (empty = everything)">
+  </label>
+  <div id="exCount" class="dim"></div>
+  <fieldset><legend>Method</legend>
+    <label class="check"><input type="radio" name="exMode" value="symlink" checked> Symlinks: instant, no extra disk space</label>
+    <label class="check"><input type="radio" name="exMode" value="hardlink"> Hard links: instant, same drive only</label>
+    <label class="check"><input type="radio" name="exMode" value="copy"> Copy the files</label>
+  </fieldset>
+  <fieldset><legend>Folders</legend>
+    <label class="check"><input type="radio" name="exLayout" value="flat" checked> Everything in one folder</label>
+    <label class="check"><input type="radio" name="exLayout" value="by-tag"> One folder per tag in the filter</label>
+  </fieldset>
+  <div class="row"><button id="exPick">Choose destination</button><span id="exDest" class="dim">No folder chosen</span></div>
+  <progress id="exProg" hidden></progress>
+  <menu><button id="exClose">Close</button><button id="exRun" class="primary" disabled>Export</button></menu>
+</dialog>
+
+<script src="../shared/core.js"></script>
+<script src="virtual.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
